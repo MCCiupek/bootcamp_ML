@@ -115,7 +115,7 @@ class Matrix:
             return Vector([mul_lists(self.data[i], 1 / float(scalar)) for i in range(0, self.shape[0])])
 
     def __rtruediv__(self, scalar):
-        return self / scalar
+        return None
 
     def __str__(self):
         if type(self) == Vector:
