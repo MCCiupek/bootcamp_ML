@@ -179,10 +179,47 @@ def plot(x, y, y_hat, theta):
         This function should not raise any Exception.
     """
     try:
-        plt.plot(x, y, 'o', color='c', label='S_true (pills)')
-        plt.plot(x, y_hat, '--o', color='limegreen', label='S_predict (pills)')
+        plt.plot(x, y, 'o', color='c', label='$S_{true}(pills)$')
+        plt.plot(x, y_hat, '--o', color='limegreen', label='$S_{predict}(pills)$')
         plt.xlabel("Quantity of blue pills (in micrograms)")
         plt.ylabel("Space driving score")
+        plt.legend()
+        plt.show()
+    except Exception as err:
+        print(err)
+        pass
+
+
+def my_lr(x, y, theta0, theta1):
+    lr = MyLR(np.array([[float(theta0)], [float(theta1)]]))
+    y_pred = lr.predict_(x)
+    return linear_model1.mse_(y, y_pred)
+
+
+def plot_mse(x, y, theta):
+    """Plot the data and prediction line from three non-empty numpy.array.
+    Args:
+        x: has to be an numpy.array, a vector of shape m * 1.
+        y: has to be an numpy.array, a vector of shape m * 1.
+        theta: has to be an numpy.array, a vector of shape 2 * 1.
+    Returns:
+        Nothing.
+    Raises:
+        This function should not raise any Exception.
+    """
+    try:
+        theta0 = np.linspace(theta[0] * 0.8, theta[0] * 1.2, 6)
+        
+        for i in range(0, 6):
+            theta1 = np.linspace(theta[1] * 0.9, theta[1] * 1.1, 100)
+            #fct = my_lr(x, y, theta0[i], theta1)
+            plt.plot(theta1,
+                     my_lr(x, y, theta0[i], theta1),
+                     label="$J(\\theta_0=c_{0}, \\theta_1)$".format(i))
+        plt.xlabel("$\\theta_1$")
+        plt.ylabel("cost function $J(\\theta_0, \\theta_1)$")
+        #plt.xlim([-15, -5])
+        #plt.ylim([10, 150])
         plt.legend()
         plt.show()
     except Exception as err:
@@ -209,11 +246,25 @@ if __name__=="__main__":
     print(mean_squared_error(Yscore, Y_model1))
 
     plot(Xpill, Yscore, Y_model1, linear_model1.thetas)
-    
+
+    plot_mse(Xpill, Yscore, linear_model1.thetas)
+
+    linear_model1.fit_(Xpill, Yscore)
+
     # Example 2:
-    linear_model2 = MyLR(np.array([[89.0], [-6]]))
+    linear_model2 = MyLR(np.array([[89.0], [-6]]), alpha=0.01, max_iter=50000)
     Y_model2 = linear_model2.predict_(Xpill)
     print(linear_model2.mse_(Yscore, Y_model2))
     print(mean_squared_error(Yscore, Y_model2))
-    
+
+    plot(Xpill, Yscore, Y_model2, linear_model2.thetas)
+
+    plot_mse(Xpill, Yscore, linear_model2.thetas)
+
+    linear_model2.fit_(Xpill, Yscore)
+
+    Y_model2 = linear_model2.predict_(Xpill)
+    print(mean_squared_error(Yscore, Y_model2))
+    print(mean_squared_error(Yscore, Y_model2))
+
     plot(Xpill, Yscore, Y_model2, linear_model2.thetas)
