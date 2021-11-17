@@ -12,15 +12,6 @@ class MyLinearRegression():
         self.thetas = np.array(thetas).reshape((len(thetas), 1))
 
     @staticmethod
-    def normal_eq(x, y):
-        try:
-            X = MyLinearRegression.add_intercept(x)
-            return np.matmul(inv(np.matmul(np.transpose(X), X)), np.matmul(np.transpose(X), y))
-        except Exception as err:
-            print("Error: normal_eq: {0}: {1}".format(type(err).__name__, err))
-            return None
-
-    @staticmethod
     def add_intercept(x):
         """
         Adds a column of 1’s to the non-empty numpy.array x.
@@ -39,6 +30,15 @@ class MyLinearRegression():
             return np.append(np.ones((len(x), 1)), x, axis=1)
         except Exception as err:
             print("Error: add_intercept: {0}: {1}".format(type(err).__name__, err))
+            return None
+
+    @staticmethod
+    def normal_eq(x, y):
+        try:
+            X = MyLinearRegression.add_intercept(x)
+            return np.matmul(np.linalg.inv(np.matmul(np.transpose(X), X)), np.matmul(np.transpose(X), y))
+        except Exception as err:
+            print("Error: normal_eq: {0}: {1}".format(type(err).__name__, err))
             return None
 
     def loss_elem_(self, y, y_hat):

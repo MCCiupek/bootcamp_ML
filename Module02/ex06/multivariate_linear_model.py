@@ -74,8 +74,8 @@ print("\n--- Multivariate Linear Regression ---")
 # Hyperparameters
 
 alpha = 0.00001
-max_iter = 600000
-thetas = [1.0, 1.0, 1.0, 1.0]
+max_iter = 1000
+thetas = MyLR.normal_eq(x, y)
 
 # Model
 
