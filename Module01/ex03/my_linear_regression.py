@@ -144,6 +144,7 @@ class MyLinearRegression():
         try:
             for it in range(0, self.max_iter):
                 self.thetas = self.thetas - self.alpha * self.gradient(x, y)
+            return self.thetas
         except Exception as err:
             print("Error: fit_: {0}: {1}".format(type(err).__name__, err))
             return None
