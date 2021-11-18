@@ -147,7 +147,7 @@ class MyLogisticRegression():
         """
         try:
             X = MyLogisticRegression.add_intercept(x)
-            return 1 / y.shape[0] * np.dot(np.transpose(X), self.sigmoid_(np.dot(X, self.thetas)) - y)
+            return (1 / y.size) * np.transpose(X).dot(self.predict_(x) - y)
         except Exception as err:
             print("Error: log_gradient: {0}: {1}".format(type(err).__name__, err))
             return None
