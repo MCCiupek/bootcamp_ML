@@ -101,11 +101,12 @@ class MyLogisticRegression():
             This function should not raise any Exception.
         """
         try:
-            if len(x.shape) > 1 and x.shape[1]:
-                res = np.zeros(x.shape)
-                for i in range(0, x.shape[1]):
-                    res[:,i] = 1 / (1 + np.exp(-x[:,i]))
-            return res#1 / (1 + np.exp(-x))
+            # if len(x.shape) > 1 and x.shape[1]:
+            #     res = np.zeros(x.shape)
+            #     for i in range(0, x.shape[1]):
+            #         res[:,i] = 1 / (1 + np.exp(-x[:,i]))
+            # return res
+            return 1 / (1 + np.exp(-x))
         except Exception as err:
             print("Error: sigmoid_: {0}: {1}".format(type(err).__name__, err))
             return None
@@ -171,11 +172,7 @@ class MyLogisticRegression():
             This function should not raise any Exception.
         """
         try:
-            for it in range(self.max_iter):
-                if it % 100 ==0 :
-                    print(self.log_gradient(x, y))
-                    print(self.thetas)
-                    print()
+            for i in range(self.max_iter):
                 self.thetas = self.thetas - self.alpha * self.log_gradient(x, y)
             return self.thetas
         except Exception as err:
